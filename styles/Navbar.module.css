@@ -1,0 +1,12 @@
+.navList {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+.navLink{
+    list-style: none;
+}
+.navLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
