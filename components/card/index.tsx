@@ -7,6 +7,15 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 const BlogCard = ({ data }: any) => {
+  console.log(data, '<><><><><>')
+  const handleDelete = async (id : number) => {
+    const res = await fetch(`http://localhost:3000/blog/${id}`, {
+      method: 'DELETE',
+    });
+    const data = await res.json();
+    console.log(data, 'delete' )
+    window.location.reload();
+  }
   return (
     <div>
       {data?.map((item: any) => {
@@ -15,9 +24,9 @@ const BlogCard = ({ data }: any) => {
             <Card
               sx={{ minWidth: 275 }}
               key={item.id}
-              style={{ margin: "10px 0" }}
+              style={{ margin: "10px 0"}} 
             >
-              <CardContent>
+              <CardContent style={{display:'flex',alignItems:'center', justifyContent:'space-between'}}>
                 <Typography style={{ textAlign: "start" }}>
                   <span
                     style={{
@@ -32,6 +41,9 @@ const BlogCard = ({ data }: any) => {
                   </span>
                   <Link href={`blogs/${item.id}`}>{item.title}</Link>
                 </Typography>
+                <Box>
+                  <Button onClick={() => handleDelete(item.id)}>Delete</Button>
+                </Box>
               </CardContent>
             </Card>
           </>

@@ -10,14 +10,7 @@ import { useRouter } from "next/router";
 
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/blog",
-  {
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'User-Agent': '*',
-    },
-  }
-  );
+  const res = await fetch("http://localhost:3003/blog");
   const data = await res.json();
   return {
     props: {
@@ -30,10 +23,10 @@ interface IProps {
   data: [{ id: number; title: string }];
 }
 
-function Blog({ data }: IProps) {
+function Posts({ data }: IProps) {
 const router = useRouter();
   const createBlog = () => {
-    router.push('/blogs/createBlog')
+    router.push('/posts/createPosts')
   }
   const newData = data.slice(0, 10);
   return (
@@ -52,7 +45,7 @@ const router = useRouter();
             height={500}
             alt="windows"
           />
-          <h1>Blogs</h1>
+          <h1>Posts</h1>
           <Box style={{ textAlign: "start" }}>
             <Button
               variant="outlined"
@@ -69,4 +62,4 @@ const router = useRouter();
   );
 }
 
-export default Blog;
+export default Posts;

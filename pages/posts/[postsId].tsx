@@ -11,10 +11,15 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/blog");
-  const  data = await res.json();
+  const res = await fetch("http://localhost:3000/blog",  {
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'User-Agent': '*',
+    },
+  });
+  const data = await res.json();
 
-  const paths = data?.map((curId: any) => {
+  const paths = data.map((curId: any) => {
     return {
       params: {
         blogId: curId.id.toString(),
@@ -29,7 +34,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: any) {
   const id = context.params.blogId;
-  const res = await fetch(`http://localhost:3000/blog/${id}`);
+
+  const res = await fetch(`http://localhost:3000/blog/${id}`,  {
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'User-Agent': '*',
+    },
+  });
   const data = await res.json();
   return {
     props: {
@@ -39,7 +50,7 @@ export async function getStaticProps(context: any) {
 }
 
 
-const BlogDetails = ({data}: any) => {
+const PostDetails = ({data}: any) => {
     const {id, title} = data;
   return (
     <div>
@@ -61,7 +72,7 @@ const BlogDetails = ({data}: any) => {
                     color:'white',
                     padding:'4px 6px'
                     }}>{id}</span> 
-                    <Link href={`/blogs}`}>
+                    <Link href={`/posts}`}>
                     {title}
                     </Link></Typography>
               </CardContent>
@@ -72,4 +83,4 @@ const BlogDetails = ({data}: any) => {
   );
 };
 
-export default BlogDetails;
+export default PostDetails;
